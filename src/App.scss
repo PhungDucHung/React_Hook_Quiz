@@ -7,3 +7,17 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.app-container{
+  .header-container{
+    background: grey;
+    .navbar-nav{
+      // .nav-link{
+       
+      // }
+      .active{
+          color: #00bfff;
+      }
+    }
+  }
+}
