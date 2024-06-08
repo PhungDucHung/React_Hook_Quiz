@@ -8,16 +8,86 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (min-width: 1450px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+      max-width: 1400px !important;
+  }
+}
+
 .app-container{
   .header-container{
-    background: grey;
-    .navbar-nav{
-      // .nav-link{
-       
-      // }
-      .active{
-          color: #00bfff;
+    .btn-login{
+      border-radius: 5px;
+      margin-right: 15px;
+      padding: 0 15px;
+      border: 1px solid #807f7f;
+      height: 40px;
+    }
+    .btn-signup{
+      border-radius: 5px;
+      padding: 0 15px;
+      background: rgb(28, 27, 27);
+      color: white;
+      height: 40px;
+
+      &:hover{
+        background: black;
+      }
+    }
+    .navbar{
+      z-index: 10;
+      padding-top: 20px;
+      background-color: rgba(0,0,0,0) !important;
+          // .nav-link{
+
+          // }
+          .active{
+              color: #00bfff;
+          }
+          .navbar-brand{
+            color: black;
+          }
+  }
+  }
+  .homepage-container{
+    .homepage-content{
+      padding: 100px;
+      position: relative;
+      width: 50%;
+      z-index: 10;
+      //----------------------tạo khoảng cách trong flex
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      //--------------------------------------------------
+      .title1{
+        font-size: 50px;
+        font-weight: 600;
+      }
+      .title2{
+        font-size: 20px;
+      }
+      .title3{
+        button{
+          border-radius: 5px;
+          padding: 0 15px;
+          background: rgb(28, 27, 27);
+          color: white;
+          height: 40px;
+
+          &:hover{
+            background: black;
+          }
+        }
       }
     }
   }
+}
+
+
+video{
+  position: fixed;            
+  bottom: 0;
+  width: 100vw;
+  z-index: 5;
 }

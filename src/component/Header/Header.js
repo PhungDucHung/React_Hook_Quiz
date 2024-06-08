@@ -9,23 +9,25 @@ const Header = () => {
     <Navbar expand="lg" className="bg-body-tertiary">
       <Container>
         {/* <Navbar.Brand href="#home">Quizzzzzzzzz</Navbar.Brand> */}
-        <NavLink to = "/" className='navbar-brand'> Quizzzzzzzzz</NavLink>   
+        <NavLink to = "/" className='navbar-brand '> Quizzzzzzzzz</NavLink>   
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {/* react-router-dom */}
             <NavLink to = "/" className='nav-link '> Home</NavLink>       {/*className='nav-link' để đồng bộ với bootstrap*/}
-            <NavLink to = "/users" className='nav-link '>User</NavLink>   { /* chức năng ẩn active giúp đổi màu khi nhấn vào */ }
+            <NavLink to = "/users" className='nav-link '>User</NavLink>   { /* chức năng ẩn active giúp đổi màu khi nhấn v */ }
             <NavLink to = "/admins" className='nav-link'> Admin</NavLink>
             {/* --------------------------- */}
             </Nav>
-          <nav>
-          <NavDropdown title="Setting" id="basic-nav-dropdown">
+           
+          <nav>                                { /* muốn nó qua phải thì tạo cái tag nav mới rồi quăng qua */}
+          <button className='btn-login'>Log in</button>
+          <button className='btn-signup'>Sign up</button> 
+          {/* <NavDropdown title="Setting" id="basic-nav-dropdown">
               <NavDropdown.Item>Log in</NavDropdown.Item>
               <NavDropdown.Item>Log out</NavDropdown.Item>
               <NavDropdown.Item>Profile</NavDropdown.Item>
-
-            </NavDropdown>
+            </NavDropdown> */}
           </nav>
         </Navbar.Collapse>
       </Container>
