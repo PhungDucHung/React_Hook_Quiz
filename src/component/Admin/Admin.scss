@@ -1,0 +1,8 @@
+.admin-container {
+    display: flex;     // xếp các phần tử nằm ngang theo thứ tự khối div
+    .admin-sidebar {
+        .pro-sidebar {
+            height: 100vh !important;
+            }
+    }
+}
