@@ -13,9 +13,10 @@ const ManageUser = (props) => {
                 </div>
                 <div>
                     table users
-                    <ModalCreateUser></ModalCreateUser>
                 </div>
+                <ModalCreateUser></ModalCreateUser>
             </div>
+            
         </div>
     )
 }
