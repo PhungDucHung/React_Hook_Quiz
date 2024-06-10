@@ -3,11 +3,11 @@ import ModalCreateUser from "./ModalCreateUser"
 
 const ManageUser = (props) => {
     return (
-        <div classNameName="manage-user-container">
-            <div classNameName="title">
+        <div className="manage-user-container">
+            <div className="title">
                 Manage User
             </div>
-            <div classNameName="users-content">
+            <div className="users-content">
                 <div>
                     <button>Add new users</button>
                 </div>
