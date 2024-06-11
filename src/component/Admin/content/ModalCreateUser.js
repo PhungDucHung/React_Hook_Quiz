@@ -3,11 +3,20 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import './ManageUser.scss';
 import { AiOutlinePlusCircle } from "react-icons/ai";
-
+import axios from 'axios';
 
 const ModalCreateUser = (props) => {
   const {show ,setShow} = props;
-  const handleClose = () => setShow(false);
+  const handleClose = () =>{
+    setShow(false)
+    // thiết lập khi tắt modal các phần tử nhập sẽ reset
+    setEmail("");
+    setPassword("");
+    setUsername("");
+    setImage("");
+    setRole("");
+    setPreviewImage("");
+  } 
 
 
   const [email, setEmail] = useState("");
@@ -27,6 +36,28 @@ const ModalCreateUser = (props) => {
     }
   }
 
+  const handSubmitCreateUser = async() => {
+    //  let data = {
+    //   email: email,
+    //   password: password,
+    //   username: Username,
+    //   role: role,
+    //   userImage: image,
+    //  }
+    //  console.log(data);
+
+    //---------------- copy code trên trang github axio
+     const data = new FormData();
+      data.append('email', email);
+      data.append('password', password);
+      data.append('username', Username);
+      data.append('role', role);
+      data.append('userImage', image);
+      
+      let res = await axios.post('http://localhost:8081/api/v1/participant', data)
+      console.log("check res", res);
+  }
+    //-------------------------------------------------
   return (
     <>
       {/* <Button variant="primary" onClick={handleShow}>
@@ -87,7 +118,7 @@ const ModalCreateUser = (props) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={()=>handSubmitCreateUser()}>
             Save 
           </Button>
         </Modal.Footer>
