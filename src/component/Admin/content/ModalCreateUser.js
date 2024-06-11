@@ -4,11 +4,11 @@ import Modal from 'react-bootstrap/Modal';
 import './ManageUser.scss';
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
-const ModalCreateUser = () => {
-  const [show, setShow] = useState(false);
 
+const ModalCreateUser = (props) => {
+  const {show ,setShow} = props;
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
 
   const [email, setEmail] = useState("");
   const [password, setPassword ] = useState("");
@@ -29,9 +29,9 @@ const ModalCreateUser = () => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      {/* <Button variant="primary" onClick={handleShow}>
         Launch demo modal
-      </Button>
+      </Button> */}
       {/* backdrop="static" đùng để chặn out modal khi nhấn bên ngoài*/}
       <Modal show={show} 
       onHide={handleClose} 
@@ -96,4 +96,3 @@ const ModalCreateUser = () => {
   );
 }
 export default ModalCreateUser
-
