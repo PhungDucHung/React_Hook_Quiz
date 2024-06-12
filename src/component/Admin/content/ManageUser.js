@@ -1,30 +1,44 @@
-import { useState } from "react";
-import ModalCreateUser from "./ModalCreateUser"
+import ModalCreateUser from "./ModalCreateUser";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import TableUser from "./TableUser";
-
+import { useEffect, useState } from "react";
+import { getAllUsers } from "../../../services/apiService";
 
 const ManageUser = (props) => {
     const [showModalCreateUser, setShowModalCreateUser] = useState(false);
+    const [listUsers, setListUsers] = useState([]);
+
+    useEffect(() => {
+        fetchListUsers();
+    }, []);
+
+    const fetchListUsers = async () => {
+        let res = await getAllUsers();
+        if (res.EC === 0) {
+            setListUsers(res.DT);
+        }
+    };
+
     return (
         <div className="manage-user-container">
-            <div className="title">
-                Manage User
-            </div>
+            <div className="title">Manage User</div>
             <div className="users-content">
                 <div className="btn-add-new">
-                    <button className="btn btn-primary" onClick={()=> setShowModalCreateUser(true) }><AiOutlinePlusCircle />Add new users</button>
+                    <button className="btn btn-primary" onClick={() => setShowModalCreateUser(true)}>
+                        <AiOutlinePlusCircle /> Add new users
+                    </button>
                 </div>
                 <div className="table-user-container">
-                    <TableUser></TableUser>
+                    <TableUser listUsers={listUsers}></TableUser>
                 </div>
-                <ModalCreateUser 
-                    show={showModalCreateUser} 
-                    setShow={setShowModalCreateUser}>
-                </ModalCreateUser>
+                <ModalCreateUser
+                    show={showModalCreateUser}
+                    setShow={setShowModalCreateUser}
+                    fetchListUsers={fetchListUsers} // Truyền fetchListUsers cho ModalCreateUser
+                />
             </div>
-            
         </div>
-    )
-}
-export default ManageUser
+    );
+};
+
+export default ManageUser;
