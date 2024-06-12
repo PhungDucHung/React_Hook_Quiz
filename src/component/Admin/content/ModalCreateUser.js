@@ -3,8 +3,9 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import './ManageUser.scss';
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import axios from 'axios';
 import { toast } from 'react-toastify';
+import { postCreateNewUser } from '../../../services/apiService';
+
 
 
 const ModalCreateUser = (props) => {
@@ -23,7 +24,7 @@ const ModalCreateUser = (props) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword ] = useState("");
-  const [Username, setUsername] = useState("");
+  const [username, setUsername] = useState("");
   const [image, setImage] = useState("");
   const [role , setRole] = useState("USER");
   const [previewImage, setPreviewImage] = useState("");
@@ -59,23 +60,17 @@ const ModalCreateUser = (props) => {
       return;
     }
 
-      //submit data
-     const data = new FormData();
-      data.append('email', email);
-      data.append('password', password);
-      data.append('username', Username);
-      data.append('role', role);
-      data.append('userImage', image);
-      
-      let res = await axios.post('http://localhost:8081/api/v1/participant', data)
+      let data = await  postCreateNewUser(email, password ,username ,role ,image)
       // console.log("check res", res.data);
-      if(res.data && res.data.EC === 0){
+      if(data && data.EC === 0){
         toast.success('Add Success')
         handleClose();
       }
-      if(res.data && res.data.EC !== 0){
+      if(data && data.EC !== 0){
         toast.error('Invalid');
       }
+
+
   }
     //-------------------------------------------------
   return (
@@ -105,7 +100,7 @@ const ModalCreateUser = (props) => {
             </div>
             <div className="col-md-6">
                 <label  className="form-label">Username</label>
-                <input type="text" className="form-control" value={Username} onChange={(event)=>setUsername(event.target.value)}/>
+                <input type="text" className="form-control" value={username} onChange={(event)=>setUsername(event.target.value)}/>
             </div>
             <div className="col-md-4">
                 <label  className="form-label">ROW</label>
