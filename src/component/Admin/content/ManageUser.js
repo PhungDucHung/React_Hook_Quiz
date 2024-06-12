@@ -3,9 +3,12 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import TableUser from "./TableUser";
 import { useEffect, useState } from "react";
 import { getAllUsers } from "../../../services/apiService";
+import ModalUpdateUser from "./ModalUpdateUser";
 
 const ManageUser = (props) => {
     const [showModalCreateUser, setShowModalCreateUser] = useState(false);
+    const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
+    const [dataUpdate, setDataUpdate] = useState({});
     const [listUsers, setListUsers] = useState([]);
 
     useEffect(() => {
@@ -19,6 +22,12 @@ const ManageUser = (props) => {
         }
     };
 
+    const handleClickBtnUpdate = (user) => {
+        setShowModalUpdateUser(true)
+        setDataUpdate(user)
+        console.log('update user', user);
+    }
+
     return (
         <div className="manage-user-container">
             <div className="title">Manage User</div>
@@ -29,12 +38,20 @@ const ManageUser = (props) => {
                     </button>
                 </div>
                 <div className="table-user-container">
-                    <TableUser listUsers={listUsers}></TableUser>
+                    <TableUser 
+                    listUsers={listUsers}
+                    handleClickBtnUpdate={handleClickBtnUpdate}
+                    ></TableUser>
                 </div>
                 <ModalCreateUser
                     show={showModalCreateUser}
                     setShow={setShowModalCreateUser}
                     fetchListUsers={fetchListUsers} // Truyền fetchListUsers cho ModalCreateUser
+                />
+                <ModalUpdateUser
+                    show={showModalUpdateUser}
+                    setShow={setShowModalUpdateUser}
+                    dataUpdate={dataUpdate}
                 />
             </div>
         </div>
