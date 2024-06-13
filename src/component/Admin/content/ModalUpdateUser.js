@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import "./ManageUser.scss";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { postCreateNewUser } from "../../../services/apiService";
+import { putUpdateUser } from "../../../services/apiService";
 import _ from 'lodash';
 
 const ModalUpdateUser = (props) => {
@@ -38,6 +38,7 @@ const ModalUpdateUser = (props) => {
         setImage("");
         setRole("USER");
         setPreviewImage("");
+        props.resetUpdateData();
     };
 
     const handleUploadImage = (event) => {
@@ -63,12 +64,8 @@ const ModalUpdateUser = (props) => {
             toast.warning("Invalid email");
             return;
         }
-        if (!password) {
-            toast.warning("Invalid password");
-            return;
-        }
 
-        let data = await postCreateNewUser(email, password, username, role, image);
+        let data = await putUpdateUser( dataUpdate.id,username, role, image);
         if (data && data.EC === 0) {
             toast.success("Add Success");
             handleClose();
@@ -94,6 +91,7 @@ const ModalUpdateUser = (props) => {
                                 className="form-control"
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
+                                disabled
                             />
                         </div>
                         <div className="col-md-6">
