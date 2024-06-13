@@ -69,7 +69,9 @@ const ModalUpdateUser = (props) => {
         if (data && data.EC === 0) {
             toast.success("Add Success");
             handleClose();
-            fetchListUsers(); // Gọi hàm fetchListUsers để cập nhật danh sách người dùng
+            // fetchListUsers(); // Gọi hàm fetchListUsers để cập nhật danh sách người dùng
+            // props.setCurrentPage(1)
+            await props.fetchListUsersWithPaginate(props.currentPage)
         } else {
             toast.error("Error: " + data.EM);
         }
