@@ -55,7 +55,7 @@ const ModalCreateUser = (props) => {
 
         let data = await postCreateNewUser(email, password, username, role, image);
         if (data && data.EC === 0) {
-            toast.success("Add Success");
+            toast.success(data.EM);
             handleClose();
             // fetchListUsers(); // Gọi hàm fetchListUsers để cập nhật danh sách người dùng
             props.setCurrentPage(1)
