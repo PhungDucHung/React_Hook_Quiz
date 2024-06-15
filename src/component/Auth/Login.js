@@ -5,24 +5,28 @@ import { postLogin} from '../../services/apiService'
 import { toast } from "react-toastify";
 import { useDispatch } from 'react-redux';
 import { doLogin } from '../../redux/action/userAction';
+import { GiSpinningSword } from "react-icons/gi";
+
 
 const Login = (props) => {
     const [email , setEmail] = useState("");
     const [password , setPassword] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
+    const [isLoading, setIsLoading] = useState(false);
     const handleLogin = async() => {
         // validadte
-
+        setIsLoading(true);
         // submit api
         let data = await postLogin(email, password);
         if (data && data.EC === 0) {
                 dispatch(doLogin(data))
                 toast.success(data.EM);
+                setIsLoading(false);
                 navigate('/')
         } else {
             toast.error("Error: " + data.EM);
+            setIsLoading(false)
         }
     }
     return (
@@ -62,7 +66,11 @@ const Login = (props) => {
                     <button 
                         className='btn-submit'
                         onClick={()=>handleLogin()}
-                    >Login</button>
+                        disabled = {isLoading}
+
+                    >
+                        {isLoading === true && <GiSpinningSword className='loaderIcon' />}
+                        <span>Login</span></button>
                 </div>
                 <div className='text-center'>
                     <span className='back' onClick={() => {navigate('/')}}> &#60;&#60; Go to HomePage</span>
