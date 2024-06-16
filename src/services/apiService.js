@@ -52,4 +52,4 @@ const getDataQuiz = (id) => {
     return axios.get(`/api/v1/questions-by-quiz?quizId=${id}`);
 }
 
-export { deleteUser, postCreateNewUser, getAllUsers, putUpdateUser, getUserWithPaginate ,postLogin ,postRegister ,getQuizByUser ,getDataQuiz };
+export { deleteUser, postCreateNewUser, getAllUsers, putUpdateUser, getUserWithPaginate ,postLogin ,postRegister ,getQuizByUser ,getDataQuiz }; 
