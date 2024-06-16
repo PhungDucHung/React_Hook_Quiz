@@ -11,6 +11,16 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Register from './component/Auth/Register.js';
 import ListQuiz from './component/User/ListQuiz.js';
+import DetailQuiz from './component/User/DetailQuiz.js';
+
+
+const NotFound = () =>{
+    return (
+        <div className='alert alert-danger mt-3 container'>
+            404 Not Found data with your current URL
+        </div>
+    )
+}
 
 const Layout = (props ) =>{
     return(
@@ -19,7 +29,8 @@ const Layout = (props ) =>{
         <Route path="/" element={<App />}>
             <Route index element={<HomePage/>}/>
             <Route path="users" element={<ListQuiz />} />
-        </Route>   
+        </Route>
+        <Route path="/quiz/:id" element={<DetailQuiz />} />
         <Route path="admins" element={<Admin />}>
             <Route index element={<DashBoard/>}/>
             <Route path="manage-users" element={<ManageUser />} />
@@ -27,7 +38,7 @@ const Layout = (props ) =>{
 
         <Route path="/login" element={<Login/>}></Route>
         <Route path="/Register" element={<Register/>}></Route>
-
+        <Route path="*" element={<NotFound/>}></Route>
       </Routes>
       <ToastContainer
                 position="top-right"
