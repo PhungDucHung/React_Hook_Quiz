@@ -33,6 +33,7 @@ const DetailQuiz = (props) => {
                             questionDescription = item.description;
                             image = item.image;
                         }
+                        item.answers.isSelected = false;
                         answers.push(item.answers);
                     });
                     return { questionId: key, answers, questionDescription, image };
@@ -56,6 +57,26 @@ const DetailQuiz = (props) => {
         }
     }
 
+    const handleCheckbox = (answerId , questionId) => {
+        let dataQuizClone = _.cloneDeep(dataQuiz);
+        let question = dataQuizClone.find(item => +item.questionId === +questionId);
+        if(question && question.answers) {
+            question.answers = question.answers.map(item => {
+                if(+item.id === +answerId){
+                    item.isSelected = !item.isSelected;
+                }
+                return item;
+            })
+        }
+        let index = dataQuizClone.findIndex(item => +item.questionId === +questionId);
+        if(index > -1) {
+            dataQuizClone[index] = question;
+            setDataQuiz(dataQuizClone);
+        }
+    };
+    
+    
+
     return (
         <div className="detail-quiz-container">
             <div className="left-content">
@@ -66,9 +87,10 @@ const DetailQuiz = (props) => {
                 <div className="q-body">
                     <img src="" alt="" />
                 </div>
-                <div className="q-content">
+                <div className="q-content"> 
                     <Question
                         index={index}
+                        handleCheckbox={handleCheckbox}
                         data={
                             dataQuiz && dataQuiz.length > 0
                                 ? dataQuiz[index]
@@ -89,6 +111,13 @@ const DetailQuiz = (props) => {
                         onClick={() => handleNext()}
                     >
                         Next
+                    </button>
+                    <button
+                        type="button"
+                        className="btn btn-warning"
+                        onClick={() => handleNext()}
+                    >
+                        Finish
                     </button>
                 </div>
             </div>

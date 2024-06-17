@@ -2,19 +2,23 @@ import _ from 'lodash';
 
 const Question = (props) => {
     const { data, index } = props;
-
-    console.log('Question data:', data); // Log để kiểm tra dữ liệu trong component Question
-
     if (_.isEmpty(data)) {
         return (<></>);
     }
 
+    const handleHandleCheckbox = (event, aId ,qId) => {
+        console.log('>>> data props:' ,data.id);
+        props.handleCheckbox(aId, qId);
+    };
     return (
         <>
-            {data.image &&
+            {data.image ?
                 <div className='q-image'>
                     <img src={`data:image/jpeg;base64,${data.image}`} alt="Question" />
-                </div>}
+                </div>
+                :
+                <div className='q-image'></div>  // làm vầy để không bị chạy chữ lên trên
+                }
             <div className="question">Question {index + 1}: {data.questionDescription}</div>
             <div className="answer">
                 {data.answers && data.answers.length > 0 && data.answers.map((a, idx) => {
@@ -24,7 +28,8 @@ const Question = (props) => {
                                 <input
                                     className="form-check-input"
                                     type="checkbox"
-                                    value=""
+                                    checked={a.isSelected}
+                                    onChange={(event) => handleHandleCheckbox(event,a.id , data.questionId)}
                                 />
                                 <label className='form-check-label'>
                                     {a.description}
