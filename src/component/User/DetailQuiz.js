@@ -20,7 +20,6 @@ const DetailQuiz = (props) => {
     // Thêm async/await để gọi API và xử lý dữ liệu
     const fetchQuestions = async () => {
         let res = await getDataQuiz(quizId);
-        console.log('>>> API response:', res); // Log để kiểm tra phản hồi từ API
         if (res && res.EC === 0) {
             let raw = res.DT;
             let data = _.chain(raw)
@@ -39,12 +38,9 @@ const DetailQuiz = (props) => {
                     return { questionId: key, answers, questionDescription, image };
                 })
                 .value(); // Đảm bảo gọi .value() để chuyển đổi từ LodashWrapper sang mảng dữ liệu
-            console.log('>>> Processed data:', data); // Log để kiểm tra dữ liệu đã xử lý
             setDataQuiz(data);
         }
     }
-
-    console.log("Current dataQuiz state:", dataQuiz); // Log để kiểm tra trạng thái của dataQuiz
 
     const handlePrev = () => {
         if (index - 1 < 0) return;
@@ -75,8 +71,32 @@ const DetailQuiz = (props) => {
         }
     };
     
-    
+    const handleFinishQuiz = () => {
+        let payload = {
+            quizId : +quizId,
+            answers: []
+        };
+        let answers = [];
+        if(dataQuiz && dataQuiz.length > 0){
+            dataQuiz.forEach(question => {
 
+                let questionId = question.questionId;
+                let userAnswerId = [];
+
+                question.answers.forEach(a => {
+                    if(a.isSelected === true){
+                        userAnswerId.push(a.id);
+                    }
+                })
+
+                answers.push({
+                    questionId: + questionId,
+                    userAnswerId: userAnswerId
+        })
+    })
+            payload.answers = answers
+        }
+    }
     return (
         <div className="detail-quiz-container">
             <div className="left-content">
@@ -115,7 +135,7 @@ const DetailQuiz = (props) => {
                     <button
                         type="button"
                         className="btn btn-warning"
-                        onClick={() => handleNext()}
+                        onClick={() => handleFinishQuiz()}
                     >
                         Finish
                     </button>
@@ -127,4 +147,5 @@ const DetailQuiz = (props) => {
         </div>
     )
 }
-export default DetailQuiz;
+
+export default DetailQuiz
