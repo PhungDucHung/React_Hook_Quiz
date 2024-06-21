@@ -1,8 +1,16 @@
-.quiz-container{
-    legend{
-        font-size: 15px;
+.quiz-container {
+    // padding: 15px;
+
+    .title {
+        font-size: 20px;
+        font-weight: 600;
     }
-    .list-detail{
-        padding: 15px;
+
+    legend {
+        font-size: 13px;
+    }
+
+    .list-detail {
+         padding: 15px;
     }
 }
