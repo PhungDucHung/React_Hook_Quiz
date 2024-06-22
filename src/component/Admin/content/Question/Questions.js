@@ -148,18 +148,6 @@ const Questions = (props) => {
         }
     }
 
-    const handlePreviewImage = (questionId) => {
-        let questionsClone = _.cloneDeep(questions);
-        let index = questionsClone.findIndex(item => item.id === questionId);
-        if (index > -1) {
-            setDataImagePreview({
-                url: URL.createObjectURL(questionsClone[index].imageFile),
-                title: questionsClone[index].imageName
-            })
-            setIsPreviewImage(true);
-        }
-    }
-
     const handleSubmitQuestionForQuiz = async () => {
         if(_.isEmpty(selectedQuiz)) {
             toast.error("Please choose a Quiz!")
@@ -213,6 +201,18 @@ const Questions = (props) => {
         }
         toast.success('Create questions and answers successfully')
         setQuestions(initQuestions);
+    }
+
+    const handlePreviewImage = (questionId) => {
+        let questionsClone = _.cloneDeep(questions);
+        let index = questionsClone.findIndex(item => item.id === questionId);
+        if (index > -1) {
+            setDataImagePreview({
+                url: URL.createObjectURL(questionsClone[index].imageFile),
+                title: questionsClone[index].imageName
+            })
+            setIsPreviewImage(true);
+        }
     }
     
 
@@ -344,5 +344,4 @@ const Questions = (props) => {
         </div>
     )
 }
-
 export default Questions;

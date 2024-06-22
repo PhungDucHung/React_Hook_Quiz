@@ -9,7 +9,7 @@ import { RiImageAddFill } from "react-icons/ri";
 import { v4 as uuidv4, validate } from 'uuid';
 import _ from 'lodash';
 import Lightbox from "react-awesome-lightbox";
-import { getQuizWithQA , getAllQuizForAdmin, postCreateNewAnswerForQuestion, postCreateNewQuestionForQuiz } from '../../../../services/apiService';
+import { getQuizWithQA , getAllQuizForAdmin, postUpsertQA } from '../../../../services/apiService';
 import { toast } from 'react-toastify';
 import Question from '../../../User/Question';
 
@@ -192,60 +192,76 @@ const QuizQA = (props) => {
     }
 
     const handleSubmitQuestionForQuiz = async () => {
-        if(_.isEmpty(selectedQuiz)) {
+        if (_.isEmpty(selectedQuiz)) {
             toast.error("Please choose a Quiz!")
             return;
         }
-        // validate answers
+    
+        // Validate answers
         let isValidAnswer = true;
-        let indexQ = 0 , indexA = 0;
+        let indexQ = 0, indexA = 0;
         for (let i = 0; i < questions.length; i++) {
             for (let j = 0; j < questions[i].answers.length; j++) {
-                if(!questions[i].answers[j].description) {
+                if (!questions[i].answers[j].description) {
                     isValidAnswer = false;
-                    indexA = j ;
+                    indexA = j;
                     break;
+                }
             }
+            indexQ = i;
+            if (!isValidAnswer) break;
         }
-        indexQ = i;
-        if(isValidAnswer === false) break;     
-    }
-        if(isValidAnswer === false) {
-            toast.error(`Not empty Answer ${indexA + 1} at Question ${indexQ + 1}` )
+        if (!isValidAnswer) {
+            toast.error(`Answer ${indexA + 1} at Question ${indexQ + 1} cannot be empty`);
             return;
         }
-        // validate question
+    
+        // Validate question descriptions
         let isValidQ = true;
         let indexQ1 = 0;
-        for (let i = 0 ; i < questions.length ; i++) {
-            if(!questions[i].description){
+        for (let i = 0; i < questions.length; i++) {
+            if (!questions[i].description) {
                 isValidQ = false;
                 indexQ1 = i;
                 break;
             }
         }
-        if(isValidQ === false){
-            toast.error(`Not empty description for question ${indexQ1 + 1}`);
+        if (!isValidQ) {
+            toast.error(`Question ${indexQ1 + 1} description cannot be empty`);
             return;
         }
-
-        for (const question of questions) {
-            const q = await postCreateNewQuestionForQuiz(
-                +selectedQuiz.value,
-                question.description,
-                question.imageFile
-            )
-            // Submit answer
-            for (const answer of question.answers) {
-                await postCreateNewAnswerForQuestion(
-                    answer.description, answer.isCorrect , q.DT.id
-                )
+    
+        let questionsClone = _.cloneDeep(questions);
+        for (let i = 0; i < questionsClone.length; i++) {
+            if (questionsClone[i].imageFile) {
+                questionsClone[i].imageFile = await toBase64(questionsClone[i].imageFile);
+            }
+            questionsClone[i].id = parseInt(questionsClone[i].id); // Convert question id to number
+            for (let j = 0; j < questionsClone[i].answers.length; j++) {
+                questionsClone[i].answers[j].id = parseInt(questionsClone[i].answers[j].id); // Convert answer id to number
             }
         }
-        toast.success('Create questions and answers successfully')
-        setQuestions(initQuestions);
-    }
     
+        let res = await postUpsertQA({
+            quizId: parseInt(selectedQuiz.value), // Convert quizId to number
+            questions: questionsClone
+        });
+    
+        if (res && res.EC === 0) {
+            toast.success(res.EM);
+            fetchQuizWithQA(); // Fetch updated quiz data
+        } else {
+            toast.error(res.EM);
+        }
+    };
+    
+    
+    const toBase64 = file => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+    });
 
     return (
         <div className="questions-container">
