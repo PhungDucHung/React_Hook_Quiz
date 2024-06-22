@@ -1,3 +1,4 @@
+import Questions from "../component/Admin/content/Question/Questions";
 import axios from "../utils/axiosCustomize";
 
 
@@ -83,4 +84,18 @@ const deleteQuizForAdmin = (id) => {
     return axios.delete(`/api/v1/quiz/${id}`);
 }
 
-export { deleteUser, postCreateNewUser, getAllUsers, putUpdateUser, getUserWithPaginate ,postLogin ,postRegister ,getQuizByUser ,getDataQuiz,postSubmitQuiz ,postCreateNewQuiz ,getAllQuizForAdmin , putUpdateQuizForAdmin ,deleteQuizForAdmin }; 
+const postCreateNewQuestionForQuiz = (quiz_id , description , image) => {
+    const data = new FormData();
+    data.append('quiz_id', quiz_id);
+    data.append('description', description);
+    data.append('questionImage', image);
+    return axios.post('api/v1/question', data);
+}
+
+const postCreateNewAnswerForQuestion = (description, correct_answer ,question_id) => {
+    return axios.post('api/v1/answer' ,{
+        description , correct_answer, question_id
+    });
+}
+
+export { deleteUser, postCreateNewUser, getAllUsers, putUpdateUser, getUserWithPaginate ,postLogin ,postRegister ,getQuizByUser ,getDataQuiz,postSubmitQuiz ,postCreateNewQuiz ,getAllQuizForAdmin , putUpdateQuizForAdmin ,deleteQuizForAdmin , postCreateNewQuestionForQuiz ,postCreateNewAnswerForQuestion}; 
