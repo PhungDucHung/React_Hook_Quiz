@@ -98,4 +98,13 @@ const postCreateNewAnswerForQuestion = (description, correct_answer ,question_id
     });
 }
 
-export { deleteUser, postCreateNewUser, getAllUsers, putUpdateUser, getUserWithPaginate ,postLogin ,postRegister ,getQuizByUser ,getDataQuiz,postSubmitQuiz ,postCreateNewQuiz ,getAllQuizForAdmin , putUpdateQuizForAdmin ,deleteQuizForAdmin , postCreateNewQuestionForQuiz ,postCreateNewAnswerForQuestion}; 
+const postAssignQuiz = (quizId , userId) => {
+    return axios.post('api/v1/quiz-assign-to-user',{
+        quizId , userId
+    });
+}
+const getQuizWithQA = (quizId ) => {
+    return axios.get(`api/v1/quiz-with-qa/${quizId}`);
+}
+
+export { deleteUser, postCreateNewUser, getAllUsers, putUpdateUser, getUserWithPaginate ,postLogin ,postRegister ,getQuizByUser ,getDataQuiz,postSubmitQuiz ,postCreateNewQuiz ,getAllQuizForAdmin , putUpdateQuizForAdmin ,deleteQuizForAdmin , postCreateNewQuestionForQuiz ,postCreateNewAnswerForQuestion ,postAssignQuiz ,getQuizWithQA }; 
