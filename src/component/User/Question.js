@@ -1,7 +1,11 @@
 import _ from 'lodash';
+import { useState } from 'react';
+import Lightbox from "react-awesome-lightbox"
+import { BsCursor } from 'react-icons/bs';
 
 const Question = (props) => {
     const { data, index } = props;
+    const [isPreviewImage, setIsPreviewImage] = useState(false);
     if (_.isEmpty(data)) {
         return (<></>);
     }
@@ -14,7 +18,21 @@ const Question = (props) => {
         <>
             {data.image ?
                 <div className='q-image'>
-                    <img src={`data:image/jpeg;base64,${data.image}`} alt="Question" />
+                    <img 
+                        onClick={() => setIsPreviewImage(true)}
+                        style={{ cursor: 'pointer' }}
+                        src={`data:image/jpeg;base64,${data.image}`}
+                    />
+                    {
+                        isPreviewImage === true &&
+                            <Lightbox
+                                image = {`data:image/jpeg;base64,${data.image}`}
+                                title = {"Question Image"}
+                                onClose = {() => setIsPreviewImage(false)}
+                                >
+                            </Lightbox>
+                    }
+
                 </div>
                 :
                 <div className='q-image'></div>  // làm vầy để không bị chạy chữ lên trên
