@@ -9,6 +9,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.languages{
+  .dropdown-toggle::after {
+    display: none !important;
+  }
+}
+
 @media (min-width: 1450px) {
   .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
       max-width: 1400px !important;
@@ -61,11 +67,11 @@ body {
       flex-direction: column;
       gap: 30px;
       //--------------------------------------------------
-      .title1{
+      .title-1{
         font-size: 50px;
         font-weight: 600;
       }
-      .title2{
+      .title-2{
         font-size: 20px;
       }
       .title3{

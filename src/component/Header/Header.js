@@ -7,6 +7,8 @@ import { useSelector , useDispatch } from 'react-redux';
 import { logout } from '../../services/apiService';
 import { toast } from 'react-toastify';
 import { doLogout } from '../../redux/action/userAction';
+import Language from './Language';
+
 
 const Header = () => {
   const isAuthenticated = useSelector(state => state.user.isAuthenticated)
@@ -46,7 +48,7 @@ const Header = () => {
             {/* --------------------------- */}
             </Nav>
            
-          <nav>
+          <nav className='d-flex '>
             {isAuthenticated === false ?
             <>
               <button className='btn-login' onClick={()=>handleLogin()}>Log in</button>
@@ -58,6 +60,8 @@ const Header = () => {
                   <NavDropdown.Item>Profile</NavDropdown.Item>
                 </NavDropdown>
               }
+              <span className='ms-4'><Language/></span>
+               
           </nav>
         </Navbar.Collapse>
       </Container>
